@@ -4,10 +4,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AV Squad Studios creates cinematic book trailers, promotional films and visual storytelling experiences.">
-  <title>AV SQUAD STUDIOS — We Turn Stories Into Cinema</title>
+  <meta name="description" content="AV Squad Studios creates cinematic book trailers, promotional films and author marketing campaigns.">
+  <title>AV Squad Studios | Visuals. Trailers. Stories.</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .genre-strip {
+      overflow: hidden;
+      padding: 55px 0;
+      background: #080d17;
+      border-top: 1px solid rgba(49,184,255,.18);
+      border-bottom: 1px solid rgba(49,184,255,.18);
+    }
+    .genre-heading {
+      text-align: center;
+      color: #31b8ff;
+      font-size: 12px;
+      letter-spacing: 5px;
+      margin-bottom: 28px;
+    }
+    .genre-track {
+      display: flex;
+      width: max-content;
+      animation: genreScroll 35s linear infinite;
+    }
+    .genre-strip:hover .genre-track {
+      animation-play-state: paused;
+    }
+    .genre-group {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .genre-item {
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(25px, 4vw, 42px);
+      letter-spacing: 2px;
+      padding: 0 30px;
+      white-space: nowrap;
+      transition: color .3s, text-shadow .3s;
+    }
+    .genre-item:hover {
+      color: #31b8ff;
+      text-shadow: 0 0 18px #087cff;
+    }
+    .genre-dot {
+      color: #168cff;
+      font-size: 24px;
+    }
+    @keyframes genreScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .genre-track { animation: none; }
+    }
+  </style>
 </head>
+
 <body>
 
   <div class="ambient-background">
@@ -16,10 +70,13 @@
     <div class="particles"></div>
   </div>
 
-  <header class="navbar">
-    <a href="#home" class="logo">AV <span>SQUAD</span><small>STUDIOS</small></a>
+  <header class="header">
+    <a href="#home" class="logo">
+      <span>AV SQUAD</span>
+      <small>STUDIOS</small>
+    </a>
 
-    <nav>
+    <nav class="nav">
       <a href="#about">ABOUT</a>
       <a href="#services">SERVICES</a>
       <a href="#work">OUR WORK</a>
@@ -27,259 +84,236 @@
       <a href="#contact">CONTACT</a>
     </nav>
 
-    <a href="#contact" class="nav-cta">START A PROJECT ↗</a>
+    <a href="#contact" class="header-cta">START A PROJECT ↗</a>
   </header>
 
   <main>
 
-    <!-- HERO -->
     <section class="hero" id="home">
       <div class="hero-content">
-        <p class="eyebrow">INDEPENDENT CREATIVE PRODUCTION STUDIO</p>
-
-        <h1>WE TURN<br>STORIES INTO<br><span>CINEMA.</span></h1>
-
+        <p class="eyebrow">AV SQUAD STUDIOS PRESENTS</p>
+        <h1>WE TURN STORIES<br>INTO <span>CINEMA.</span></h1>
         <p class="hero-description">
-          From the written page to the big screen experience.
-          We transform stories and creative ideas into
-          compelling cinematic visuals.
+          We transform books and creative ideas into cinematic visual
+          experiences designed to capture attention and leave an impression.
         </p>
-
         <div class="hero-buttons">
           <a href="#work" class="primary-btn">EXPLORE OUR WORK ↗</a>
-          <a href="#contact" class="secondary-btn">WORK WITH US</a>
-        </div>
-
-        <div class="hero-note">
-          VISUALS. TRAILERS. STORIES.
+          <a href="#contact" class="secondary-btn">LET'S CREATE</a>
         </div>
       </div>
-
-      <div class="hero-scroll">SCROLL TO EXPLORE ↓</div>
+      <div class="hero-bottom">
+        <span>VISUALS. TRAILERS. STORIES.</span>
+        <span>CREATIVE PRODUCTION STUDIO</span>
+      </div>
     </section>
 
-    <!-- INTRODUCTION -->
-    <section class="about section" id="about">
-      <p class="eyebrow">01 / THE STUDIO</p>
-      <h2>STORIES DESERVE<br>MORE THAN <span>WORDS.</span></h2>
+    <!-- ANIMATED GENRE SHOWCASE -->
+    <section class="genre-strip">
+      <p class="genre-heading">STORIES OF EVERY KIND</p>
 
-      <p class="section-copy">
-        AV Squad Studios is an independent creative production
-        studio specializing in cinematic storytelling and
-        visual production. We bring books, ideas and creative
-        concepts to life through carefully crafted visual
-        experiences designed to capture attention and leave
-        a lasting impression.
-      </p>
+      <div class="genre-track">
+        <div class="genre-group">
+          <span class="genre-item">THRILLER</span><span class="genre-dot">✦</span>
+          <span class="genre-item">ROMANCE</span><span class="genre-dot">✦</span>
+          <span class="genre-item">FANTASY</span><span class="genre-dot">✦</span>
+          <span class="genre-item">MYSTERY</span><span class="genre-dot">✦</span>
+          <span class="genre-item">HORROR</span><span class="genre-dot">✦</span>
+          <span class="genre-item">SCI-FI</span><span class="genre-dot">✦</span>
+          <span class="genre-item">MEMOIR</span><span class="genre-dot">✦</span>
+          <span class="genre-item">DRAMA</span><span class="genre-dot">✦</span>
+          <span class="genre-item">ADVENTURE</span><span class="genre-dot">✦</span>
+          <span class="genre-item">HISTORICAL FICTION</span><span class="genre-dot">✦</span>
+        </div>
 
-      <p class="studio-signature">AV SQUAD STUDIOS — VISUALS. TRAILERS. STORIES.</p>
+        <div class="genre-group" aria-hidden="true">
+          <span class="genre-item">THRILLER</span><span class="genre-dot">✦</span>
+          <span class="genre-item">ROMANCE</span><span class="genre-dot">✦</span>
+          <span class="genre-item">FANTASY</span><span class="genre-dot">✦</span>
+          <span class="genre-item">MYSTERY</span><span class="genre-dot">✦</span>
+          <span class="genre-item">HORROR</span><span class="genre-dot">✦</span>
+          <span class="genre-item">SCI-FI</span><span class="genre-dot">✦</span>
+          <span class="genre-item">MEMOIR</span><span class="genre-dot">✦</span>
+          <span class="genre-item">DRAMA</span><span class="genre-dot">✦</span>
+          <span class="genre-item">ADVENTURE</span><span class="genre-dot">✦</span>
+          <span class="genre-item">HISTORICAL FICTION</span><span class="genre-dot">✦</span>
+        </div>
+      </div>
     </section>
 
-    <!-- SERVICES -->
-    <section class="services section" id="services">
-      <p class="eyebrow">02 / WHAT WE CREATE</p>
-      <h2>OUR CREATIVE<br><span>CAPABILITIES.</span></h2>
+    <section class="about" id="about">
+      <div class="section-label">01 / WHO WE ARE</div>
+      <div class="about-content">
+        <h2>MORE THAN<br>JUST <span>VISUALS.</span></h2>
+        <p>
+          At AV Squad Studios, we believe every story deserves to be seen,
+          felt and remembered. We are a creative production studio bringing
+          written stories to life through cinematic visuals and strategic
+          promotional content.
+        </p>
+        <p>
+          From the first frame to the final reveal, our focus is creating
+          visual experiences that give stories a presence beyond the page.
+        </p>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <div class="section-label">02 / WHAT WE DO</div>
+      <h2>CREATIVE SERVICES.<br><span>CINEMATIC EXECUTION.</span></h2>
 
       <div class="service-grid">
         <article class="service-card">
           <span>01</span>
           <h3>CINEMATIC BOOK TRAILERS</h3>
-          <p>Transforming written stories into immersive cinematic experiences.</p>
+          <p>Bring characters, worlds and unforgettable moments to life through cinematic storytelling.</p>
         </article>
 
         <article class="service-card">
           <span>02</span>
           <h3>PRELAUNCH CAMPAIGNS</h3>
-          <p>Building anticipation and visual excitement ahead of a book launch.</p>
+          <p>Build anticipation around upcoming releases with visual content designed for launch campaigns.</p>
         </article>
 
         <article class="service-card">
           <span>03</span>
           <h3>PROMOTIONAL FILMS</h3>
-          <p>Visual productions designed to introduce ideas and capture audiences.</p>
+          <p>Give your creative projects a powerful visual identity through tailored promotional films.</p>
         </article>
 
         <article class="service-card">
           <span>04</span>
           <h3>AUTHOR MARKETING</h3>
-          <p>Creative visual content that helps authors present their books.</p>
+          <p>Develop visual promotional content that helps authors present their books to new audiences.</p>
         </article>
       </div>
     </section>
 
-    <!-- PORTFOLIO -->
-    <section class="work section" id="work">
-      <p class="eyebrow">03 / SELECTED PRODUCTIONS</p>
-      <h2>THE ART OF<br><span>VISUAL STORYTELLING.</span></h2>
+    <section class="work" id="work">
+      <div class="section-label">03 / SELECTED PRODUCTIONS</div>
+      <h2>STORIES DESERVE<br><span>THE BIG SCREEN FEEL.</span></h2>
 
-      <p class="section-copy">
-        A selection of cinematic work from the AV Squad Studios creative desk.
-      </p>
-
-      <div class="portfolio-grid">
-
-        <article class="portfolio-card">
-          <div class="video-placeholder">
-            <span>01 / BOOK TRAILER</span>
-            <span class="play-icon">▶</span>
+      <div class="work-grid">
+        <article class="work-card">
+          <div class="work-image">
+            <span>PROJECT 01</span>
           </div>
-          <h3>PROJECT ONE</h3>
-          <p>Replace with your first trailer sample.</p>
+          <h3>CINEMATIC BOOK TRAILER</h3>
+          <p>BOOK PROMOTION</p>
         </article>
 
-        <article class="portfolio-card">
-          <div class="video-placeholder">
-            <span>02 / CINEMATIC PRODUCTION</span>
-            <span class="play-icon">▶</span>
+        <article class="work-card">
+          <div class="work-image">
+            <span>PROJECT 02</span>
           </div>
-          <h3>PROJECT TWO</h3>
-          <p>Replace with your second trailer sample.</p>
+          <h3>STORY-DRIVEN VISUALS</h3>
+          <p>CREATIVE PRODUCTION</p>
         </article>
 
-        <article class="portfolio-card">
-          <div class="video-placeholder">
-            <span>03 / PROMOTIONAL FILM</span>
-            <span class="play-icon">▶</span>
+        <article class="work-card">
+          <div class="work-image">
+            <span>PROJECT 03</span>
           </div>
-          <h3>PROJECT THREE</h3>
-          <p>Replace with your third video sample.</p>
+          <h3>AUTHOR CAMPAIGN</h3>
+          <p>BOOK MARKETING</p>
         </article>
-
       </div>
     </section>
 
-    <!-- PRICING -->
-    <section class="pricing section" id="pricing">
-      <p class="eyebrow">04 / INVEST IN YOUR STORY</p>
-      <h2>PRODUCTION<br><span>PACKAGES.</span></h2>
-
-      <p class="section-copy">
-        Every story has a different scale. Choose the production
-        experience that best fits your creative vision.
-      </p>
+    <section class="pricing" id="pricing">
+      <div class="section-label">04 / INVEST IN YOUR STORY</div>
+      <h2>PRODUCTION THAT<br><span>MATCHES YOUR VISION.</span></h2>
+      <p class="pricing-intro">Every project is different. These are our starting rates.</p>
 
       <div class="pricing-grid">
-
         <article class="price-card">
-          <span class="package-number">01</span>
           <h3>SOCIAL REEL</h3>
-          <p class="duration">15-SECOND VIDEO</p>
+          <p>15-SECOND VIDEO</p>
           <div class="price">$175</div>
-          <p>Short-form cinematic content for social media.</p>
-          <a href="#contact" class="price-btn">ENQUIRE NOW ↗</a>
+          <span>STARTING AT</span>
         </article>
 
         <article class="price-card">
-          <span class="package-number">02</span>
           <h3>PRELAUNCH TRAILER</h3>
-          <p class="duration">BOOK PRELAUNCH</p>
+          <p>BOOK PRELAUNCH</p>
           <div class="price">$350</div>
-          <p>A visual introduction designed to build anticipation before launch.</p>
-          <a href="#contact" class="price-btn">ENQUIRE NOW ↗</a>
+          <span>STARTING AT</span>
         </article>
 
         <article class="price-card featured">
-          <span class="package-number">03</span>
-          <span class="featured-label">CINEMATIC</span>
           <h3>CINEMATIC TRAILER</h3>
-          <p class="duration">30-SECOND VIDEO</p>
+          <p>30-SECOND VIDEO</p>
           <div class="price">$500</div>
-          <p>A carefully crafted cinematic experience for your story.</p>
-          <a href="#contact" class="price-btn">ENQUIRE NOW ↗</a>
+          <span>STARTING AT</span>
         </article>
 
         <article class="price-card">
-          <span class="package-number">04</span>
           <h3>EXTENDED CINEMATIC</h3>
-          <p class="duration">60–75-SECOND VIDEO</p>
+          <p>60–75-SECOND VIDEO</p>
           <div class="price">$1,200</div>
-          <p>An extended visual production with room for deeper storytelling.</p>
-          <a href="#contact" class="price-btn">ENQUIRE NOW ↗</a>
+          <span>STARTING AT</span>
         </article>
 
-        <article class="price-card hollywood">
-          <span class="package-number">05</span>
-          <span class="featured-label">PREMIUM PRODUCTION</span>
+        <article class="price-card">
           <h3>HOLLYWOOD TRAILER</h3>
-          <p class="duration">FULL-SCALE PRODUCTION</p>
+          <p>FULL-SCALE PRODUCTION</p>
           <div class="price">$2,500</div>
-          <p>A full-scale cinematic trailer experience for ambitious stories.</p>
-          <a href="#contact" class="price-btn">ENQUIRE NOW ↗</a>
+          <span>STARTING AT</span>
         </article>
-
       </div>
-
-      <p class="pricing-note">
-        Every project is different. Final production scope and deliverables
-        are confirmed during consultation.
-      </p>
     </section>
 
-    <!-- PROCESS -->
-    <section class="process section">
-      <p class="eyebrow">05 / THE CREATIVE PROCESS</p>
-      <h2>FROM CONCEPT<br>TO <span>CINEMA.</span></h2>
+    <section class="process" id="process">
+      <div class="section-label">05 / HOW WE WORK</div>
+      <h2>FROM IDEA TO<br><span>FINAL FRAME.</span></h2>
 
       <div class="process-grid">
-        <article>
+        <article class="process-step">
           <span>01</span>
           <h3>DISCOVERY</h3>
-          <p>We explore your story, creative vision and production goals.</p>
+          <p>We learn about your book, vision and creative direction.</p>
         </article>
 
-        <article>
+        <article class="process-step">
           <span>02</span>
           <h3>CONCEPT</h3>
-          <p>We develop the visual direction and creative treatment.</p>
+          <p>We develop the visual direction and storytelling approach.</p>
         </article>
 
-        <article>
+        <article class="process-step">
           <span>03</span>
           <h3>PRODUCTION</h3>
-          <p>We bring the approved concept to life through visual production.</p>
+          <p>We bring the approved concept to life through cinematic production.</p>
         </article>
 
-        <article>
+        <article class="process-step">
           <span>04</span>
           <h3>DELIVERY</h3>
-          <p>Your completed cinematic production is delivered.</p>
+          <p>Your finished visual is prepared for its intended promotional use.</p>
         </article>
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section class="contact section" id="contact">
-      <p class="eyebrow">06 / LET'S CREATE</p>
-      <h2>YOUR STORY.<br>OUR <span>VISION.</span></h2>
+    <section class="contact" id="contact">
+      <div class="section-label">06 / YOUR STORY STARTS HERE</div>
+      <h2>LET'S MAKE<br><span>SOMETHING UNFORGETTABLE.</span></h2>
+      <p>Have a story that deserves a cinematic experience? Let's talk.</p>
+      <a href="mailto:YOUR_EMAIL_HERE" class="primary-btn">START A PROJECT ↗</a>
 
-      <p class="section-copy">
-        Have a story that deserves a cinematic treatment?
-        Let's talk about your next production.
-      </p>
-
-      <div class="contact-details">
-        <a href="mailto:YOUR_EMAIL_HERE" class="contact-link">
-          EMAIL THE STUDIO ↗
-        </a>
-
-        <a href="YOUR_YOUTUBE_URL" target="_blank" rel="noopener noreferrer" class="contact-link">
-          YOUTUBE ↗
-        </a>
-
-        <a href="YOUR_INSTAGRAM_URL" target="_blank" rel="noopener noreferrer" class="contact-link">
-          INSTAGRAM ↗
-        </a>
-
-        <a href="YOUR_TIKTOK_URL" target="_blank" rel="noopener noreferrer" class="contact-link">
-          TIKTOK ↗
-        </a>
+      <div class="social-links">
+        <a href="YOUR_YOUTUBE_URL" target="_blank" rel="noopener">YOUTUBE</a>
+        <a href="YOUR_INSTAGRAM_URL" target="_blank" rel="noopener">INSTAGRAM</a>
+        <a href="YOUR_TIKTOK_URL" target="_blank" rel="noopener">TIKTOK</a>
       </div>
     </section>
 
   </main>
 
   <footer>
-    <a href="#home" class="logo">AV <span>SQUAD</span><small>STUDIOS</small></a>
+    <a href="#home" class="logo">
+      <span>AV SQUAD</span>
+      <small>STUDIOS</small>
+    </a>
     <p>VISUALS. TRAILERS. STORIES.</p>
     <p>© 2026 AV SQUAD STUDIOS. ALL RIGHTS RESERVED.</p>
   </footer>
