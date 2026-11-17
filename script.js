@@ -1,177 +1,134 @@
 
-document.addEventListener("DOMContentLoaded", () => {
+const genres = [
+  "FANTASY",
+  "ROMANCE",
+  "THRILLER",
+  "MYSTERY",
+  "SCI-FI",
+  "HORROR",
+  "ADVENTURE",
+  "HISTORICAL",
+  "DRAMA",
+  "COMEDY",
+  "PARANORMAL",
+  "CRIME",
+  "LITERARY",
+  "YOUNG ADULT",
+  "CHILDREN'S",
+  "MEMOIR",
+  "BIOGRAPHY",
+  "DYSTOPIAN",
+  "SUSPENSE",
+  "SATIRE"
+];
 
-  /* =====================================
-     1. SMOOTH SCROLLING NAVIGATION
-  ===================================== */
+const container = document.getElementById("bubbleContainer");
+const counter = document.getElementById("counter");
+const finalMessage = document.getElementById("finalMessage");
+const replayButton = document.getElementById("replayButton");
 
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", event => {
-      const href = link.getAttribute("href");
+let timers = [];
+let currentIndex = 0;
 
-      if (!href || href === "#") return;
+function clearTimers() {
+  timers.forEach(clearTimeout);
+  timers = [];
+}
 
-      const target = document.querySelector(href);
+function createParticles(x, y) {
+  for (let i = 0; i < 12; i++) {
+    const particle = document.createElement("span");
+    particle.className = "particle";
 
-      if (target) {
-        event.preventDefault();
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 30 + Math.random() * 65;
 
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      }
-    });
+    particle.style.left = x + "%";
+    particle.style.top = y + "%";
+    particle.style.setProperty("--dx",
+      Math.cos(angle) * distance + "px");
+    particle.style.setProperty("--dy",
+      Math.sin(angle) * distance + "px");
+
+    container.appendChild(particle);
+
+    setTimeout(() => particle.remove(), 900);
+  }
+}
+
+function showGenre(index) {
+  if (index >= genres.length) {
+    finishAnimation();
+    return;
+  }
+
+  const positions = [
+    [12, 15], [37, 5], [70, 12], [85, 37],
+    [64, 65], [33, 70], [8, 48], [47, 37],
+    [78, 72], [20, 82], [53, 12], [91, 65],
+    [39, 45], [67, 35], [15, 30], [52, 82],
+    [82, 18], [29, 22], [73, 83], [46, 57]
+  ];
+
+  const [x, y] = positions[index];
+  const size = 75 + Math.random() * 45;
+
+  const bubble = document.createElement("div");
+  bubble.className = "genre-bubble";
+
+  bubble.style.setProperty("--x", x + "%");
+  bubble.style.setProperty("--y", y + "%");
+  bubble.style.setProperty("--size", size + "px");
+
+  const name = document.createElement("span");
+  name.className = "genre-name";
+  name.textContent = genres[index];
+
+  bubble.appendChild(name);
+  container.appendChild(bubble);
+
+  requestAnimationFrame(() => {
+    bubble.classList.add("pop");
   });
 
+  createParticles(x, y);
 
-  /* =====================================
-     2. SCROLL REVEAL ANIMATIONS
-  ===================================== */
+  currentIndex++;
+  counter.textContent =
+    String(currentIndex).padStart(2, "0") + " / 20";
 
-  const revealSections = document.querySelectorAll(
-    ".about, .services, .work, .pricing, .process, .contact"
-  );
+  if (index + 1 < genres.length) {
+    const timer = setTimeout(() => {
+      showGenre(index + 1);
+    }, 650);
 
-  if ("IntersectionObserver" in window) {
-
-    const observer = new IntersectionObserver(entries => {
-
-      entries.forEach(entry => {
-
-        if (entry.isIntersecting) {
-
-          entry.target.classList.add("visible");
-
-          observer.unobserve(entry.target);
-
-        }
-
-      });
-
-    }, {
-      threshold: 0.08
-    });
-
-    revealSections.forEach(section => {
-      observer.observe(section);
-    });
-
+    timers.push(timer);
   } else {
-
-    revealSections.forEach(section => {
-      section.classList.add("visible");
-    });
-
+    const timer = setTimeout(finishAnimation, 1400);
+    timers.push(timer);
   }
+}
 
+function finishAnimation() {
+  finalMessage.classList.add("show");
+}
 
-  /* =====================================
-     3. FLOATING BLUE PARTICLES
-  ===================================== */
+function startAnimation() {
+  clearTimers();
 
-  const particleContainer = document.querySelector(".particles");
+  container.innerHTML = "";
+  finalMessage.classList.remove("show");
 
-  if (particleContainer) {
+  currentIndex = 0;
+  counter.textContent = "01 / 20";
 
-    for (let i = 0; i < 35; i++) {
+  const timer = setTimeout(() => {
+    showGenre(0);
+  }, 700);
 
-      const particle = document.createElement("span");
+  timers.push(timer);
+}
 
-      const size = Math.random() * 3 + 1;
-      const duration = Math.random() * 8 + 6;
-      const delay = Math.random() * 8;
+replayButton.addEventListener("click", startAnimation);
 
-      particle.style.position = "absolute";
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-      particle.style.borderRadius = "50%";
-      particle.style.background = "#31b8ff";
-
-      particle.style.left = `${Math.random() * 100}%`;
-      particle.style.top = `${Math.random() * 100}%`;
-
-      particle.style.opacity =
-        `${Math.random() * 0.5 + 0.1}`;
-
-      particle.style.boxShadow = "0 0 10px #087cff";
-      particle.style.pointerEvents = "none";
-
-      particle.style.animation =
-        `floatParticle ${duration}s ease-in-out ${delay}s infinite alternate`;
-
-      particleContainer.appendChild(particle);
-
-    }
-
-  }
-
-
-  /* =====================================
-     4. PARTICLE MOVEMENT ANIMATION
-  ===================================== */
-
-  const particleStyle = document.createElement("style");
-
-  particleStyle.textContent = `
-    @keyframes floatParticle {
-
-      from {
-        transform: translate3d(0, 0, 0);
-      }
-
-      to {
-        transform: translate3d(25px, -45px, 0);
-      }
-
-    }
-  `;
-
-  document.head.appendChild(particleStyle);
-
-
-  /* =====================================
-     5. CONTINUOUS GENRE MARQUEE
-  ===================================== */
-
-  const genreTrack = document.querySelector(".genre-track");
-
-  if (genreTrack) {
-
-    genreTrack.style.display = "flex";
-    genreTrack.style.flexWrap = "nowrap";
-    genreTrack.style.width = "max-content";
-
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-
-      genreTrack.style.animation =
-        "genreScroll 30s linear infinite";
-
-    }
-
-  }
-
-
-  /* =====================================
-     6. FOOTER COPYRIGHT YEAR
-  ===================================== */
-
-  const footerCopyright =
-    document.querySelector("footer p:last-child");
-
-  if (footerCopyright) {
-
-    footerCopyright.textContent =
-      `© ${new Date().getFullYear()} AV SQUAD STUDIOS. ALL RIGHTS RESERVED.`;
-
-  }
-
-
-  /* =====================================
-     7. PAGE LOADED CLASS
-  ===================================== */
-
-  document.body.classList.add("page-loaded");
-
-
-});
+startAnimation();
