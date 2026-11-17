@@ -1,151 +1,307 @@
 
-/* =========================================================
-   AV SQUAD STUDIOS — COMPLETE WEBSITE JAVASCRIPT
-========================================================= */
+/* =========================================
+   AV SQUAD STUDIOS
+   WEBSITE JAVASCRIPT
+========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  /* =======================================================
-     1. CINEMATIC INTRO
-  ======================================================= */
 
-  const intro = document.querySelector(".intro-screen");
-  const skipIntro = document.querySelector(".intro-skip");
+  /* =====================================
+     1. INTRO ANIMATION
+  ===================================== */
+
+  const introScreen = document.getElementById("introScreen");
+  const introSkip = document.getElementById("introSkip");
 
   function closeIntro() {
-    if (!intro) return;
+    if (!introScreen) return;
 
-    intro.classList.add("is-hidden");
+    introScreen.classList.add("intro-hidden");
 
-    // Remove the intro from interaction after its transition.
-    window.setTimeout(() => {
-      intro.style.display = "none";
+    document.body.style.overflow = "";
+
+    setTimeout(() => {
+      introScreen.style.display = "none";
     }, 1100);
   }
 
-  if (intro) {
-    // Automatically close after approximately five seconds.
-    window.setTimeout(closeIntro, 5000);
+  if (introScreen) {
+    document.body.style.overflow = "hidden";
+
+    const introTimer = setTimeout(closeIntro, 5500);
+
+    if (introSkip) {
+      introSkip.addEventListener("click", () => {
+        clearTimeout(introTimer);
+        closeIntro();
+      });
+    }
   }
 
-  if (skipIntro) {
-    skipIntro.addEventListener("click", closeIntro);
+
+  /* =====================================
+     2. HEADER SCROLL EFFECT
+  ===================================== */
+
+  const siteHeader = document.getElementById("siteHeader");
+
+  function updateHeader() {
+    if (!siteHeader) return;
+
+    if (window.scrollY > 40) {
+      siteHeader.classList.add("scrolled");
+    } else {
+      siteHeader.classList.remove("scrolled");
+    }
   }
 
+  window.addEventListener("scroll", updateHeader);
+  updateHeader();
 
-  /* =======================================================
-     2. MOBILE NAVIGATION
-  ======================================================= */
 
-  const menuToggle = document.querySelector(".menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
-  const navItems = document.querySelectorAll(".nav-links a");
+  /* =====================================
+     3. MOBILE NAVIGATION
+  ===================================== */
+
+  const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
+  const navItems = document.querySelectorAll(".nav-link");
+
+  function closeMenu() {
+    if (!navLinks || !menuToggle) return;
+
+    navLinks.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Open navigation");
+
+    const icon = menuToggle.querySelector("i");
+
+    if (icon) {
+      icon.classList.remove("fa-xmark");
+      icon.classList.add("fa-bars");
+    }
+  }
 
   if (menuToggle && navLinks) {
+
     menuToggle.addEventListener("click", () => {
-      const isOpen = navLinks.classList.toggle("is-open");
+
+      const isOpen = navLinks.classList.toggle("open");
 
       menuToggle.setAttribute("aria-expanded", String(isOpen));
-      menuToggle.innerHTML = isOpen ? "&times;" : "&#9776;";
+      menuToggle.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation" : "Open navigation"
+      );
+
+      const icon = menuToggle.querySelector("i");
+
+      if (icon) {
+        icon.classList.toggle("fa-bars", !isOpen);
+        icon.classList.toggle("fa-xmark", isOpen);
+      }
+
     });
 
-    navItems.forEach((link) => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("is-open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.innerHTML = "&#9776;";
-      });
+    navItems.forEach(link => {
+      link.addEventListener("click", closeMenu);
     });
 
-    document.addEventListener("click", (event) => {
-      const clickedInsideMenu = navLinks.contains(event.target);
-      const clickedToggle = menuToggle.contains(event.target);
-
-      if (!clickedInsideMenu && !clickedToggle) {
-        navLinks.classList.remove("is-open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.innerHTML = "&#9776;";
+    document.addEventListener("click", event => {
+      if (
+        navLinks.classList.contains("open") &&
+        !navLinks.contains(event.target) &&
+        !menuToggle.contains(event.target)
+      ) {
+        closeMenu();
       }
     });
+
   }
 
 
-  /* =======================================================
-     3. SCROLL REVEAL ANIMATIONS
-  ======================================================= */
+  /* =====================================
+     4. ACTIVE NAVIGATION LINK
+  ===================================== */
+
+  const sections = document.querySelectorAll(
+    "main section[id]"
+  );
+
+  if ("IntersectionObserver" in window) {
+
+    const sectionObserver = new IntersectionObserver(
+      entries => {
+
+        entries.forEach(entry => {
+
+          if (!entry.isIntersecting) return;
+
+          const currentId = entry.target.id;
+
+          navItems.forEach(link => {
+
+            const linkTarget = link.getAttribute("href");
+
+            link.classList.toggle(
+              "active",
+              linkTarget === `#${currentId}`
+            );
+
+          });
+
+        });
+
+      },
+      {
+        rootMargin: "-35% 0px -55% 0px"
+      }
+    );
+
+    sections.forEach(section => {
+      sectionObserver.observe(section);
+    });
+
+  }
+
+
+  /* =====================================
+     5. SCROLL REVEAL ANIMATIONS
+  ===================================== */
 
   const revealElements = document.querySelectorAll(".reveal");
 
-  if ("IntersectionObserver" in window) {
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (
+    "IntersectionObserver" in window &&
+    !prefersReducedMotion
+  ) {
+
     const revealObserver = new IntersectionObserver(
       (entries, observer) => {
-        entries.forEach((entry) => {
+
+        entries.forEach(entry => {
+
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
+
+            entry.target.classList.add("visible");
+
             observer.unobserve(entry.target);
+
           }
+
         });
+
       },
       {
         threshold: 0.12,
-        rootMargin: "0px 0px -35px 0px"
+        rootMargin: "0px 0px -40px 0px"
       }
     );
 
-    revealElements.forEach((element) => {
+    revealElements.forEach(element => {
       revealObserver.observe(element);
     });
+
   } else {
-    revealElements.forEach((element) => {
-      element.classList.add("is-visible");
+
+    revealElements.forEach(element => {
+      element.classList.add("visible");
     });
+
   }
 
 
-  /* =======================================================
-     4. ACTIVE NAVIGATION LINK
-  ======================================================= */
+  /* =====================================
+     6. PORTFOLIO VIDEO MODAL
+  ===================================== */
 
-  const sections = document.querySelectorAll("main section[id]");
+  const videoModal = document.getElementById("videoModal");
+  const videoFrame = document.getElementById("videoFrame");
+  const modalClose = document.getElementById("modalClose");
 
-  if ("IntersectionObserver" in window && sections.length) {
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+  const portfolioVideos = document.querySelectorAll(
+    ".portfolio-video[data-video]"
+  );
 
-          navItems.forEach((link) => {
-            link.classList.toggle(
-              "active",
-              link.getAttribute("href") === `#${entry.target.id}`
-            );
-          });
-        });
-      },
-      {
-        rootMargin: "-35% 0px -55% 0px",
-        threshold: 0
+  function openVideo(videoId) {
+
+    if (!videoModal || !videoFrame || !videoId) return;
+
+    videoFrame.src =
+      `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0&modestbranding=1`;
+
+    videoModal.classList.add("active");
+    videoModal.setAttribute("aria-hidden", "false");
+
+    document.body.classList.add("modal-open");
+
+  }
+
+  function closeVideo() {
+
+    if (!videoModal || !videoFrame) return;
+
+    videoModal.classList.remove("active");
+    videoModal.setAttribute("aria-hidden", "true");
+
+    document.body.classList.remove("modal-open");
+
+    // Stop video playback when modal closes.
+    videoFrame.src = "";
+
+  }
+
+  portfolioVideos.forEach(video => {
+
+    video.addEventListener("click", () => {
+
+      const videoId = video.dataset.video;
+
+      openVideo(videoId);
+
+    });
+
+  });
+
+  if (modalClose) {
+    modalClose.addEventListener("click", closeVideo);
+  }
+
+  if (videoModal) {
+
+    videoModal.addEventListener("click", event => {
+
+      if (event.target === videoModal) {
+        closeVideo();
       }
-    );
 
-    sections.forEach((section) => {
-      sectionObserver.observe(section);
     });
+
   }
 
+  document.addEventListener("keydown", event => {
 
-  /* =======================================================
-     5. GENRE BUBBLE SEQUENCE
-     
-     One bubble appears.
-     One genre name is revealed.
-     It stays briefly.
-     The bubble pops and disappears.
-     The next genre appears only after the first is gone.
-  ======================================================= */
+    if (event.key === "Escape") {
 
-  const genreStage = document.querySelector(".genre-stage");
-  const genreBubble = document.querySelector(".genre-bubble");
-  const genreName = document.querySelector(".genre-name");
+      closeVideo();
+      closeMenu();
+
+    }
+
+  });
+
+
+  /* =====================================
+     7. GENRE BUBBLE ANIMATION
+  ===================================== */
+
+  const genreStage = document.getElementById("genreStage");
+  const genreBubble = document.getElementById("genreBubble");
+  const genreName = document.getElementById("genreName");
 
   const genres = [
     "Fantasy",
@@ -170,281 +326,311 @@ document.addEventListener("DOMContentLoaded", () => {
     "Satire"
   ];
 
-  const reducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  let genreIndex = 0;
+  let genreTimer = null;
+  let genreObserver = null;
+  let genreIsVisible = false;
+  let genreSequenceStarted = false;
 
-  if (genreStage && genreBubble && genreName) {
-    let currentGenre = 0;
-    let genreTimer = null;
+  function clearGenreTimer() {
 
-    const particleCount = 12;
-
-    function clearGenreParticles() {
-      genreStage
-        .querySelectorAll(".genre-particle")
-        .forEach((particle) => particle.remove());
+    if (genreTimer) {
+      clearTimeout(genreTimer);
+      genreTimer = null;
     }
 
-    function createPopParticles() {
-      clearGenreParticles();
+  }
 
-      if (reducedMotion) return;
+  function showNextGenre() {
 
-      const stageRect = genreStage.getBoundingClientRect();
-      const bubbleRect = genreBubble.getBoundingClientRect();
+    if (!genreBubble || !genreName || !genreIsVisible) return;
 
-      const centerX =
-        bubbleRect.left - stageRect.left + bubbleRect.width / 2;
+    clearGenreTimer();
 
-      const centerY =
-        bubbleRect.top - stageRect.top + bubbleRect.height / 2;
+    // Remove previous bubble completely.
+    genreBubble.classList.remove("pop");
+    genreBubble.classList.add("bubble-exit");
 
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement("span");
-        const angle = (Math.PI * 2 * i) / particleCount;
-        const distance = 65 + Math.random() * 55;
+    genreTimer = setTimeout(() => {
 
-        particle.className = "genre-particle";
+      if (!genreIsVisible) return;
 
-        particle.style.left = `${centerX}px`;
-        particle.style.top = `${centerY}px`;
-        particle.style.setProperty(
-          "--dx",
-          `${Math.cos(angle) * distance}px`
-        );
-        particle.style.setProperty(
-          "--dy",
-          `${Math.sin(angle) * distance}px`
-        );
+      // Select the next genre.
+      genreName.textContent = genres[genreIndex];
 
-        genreStage.appendChild(particle);
+      genreIndex = (genreIndex + 1) % genres.length;
 
-        window.setTimeout(() => particle.remove(), 750);
-      }
+      // Reveal a fresh bubble.
+      genreBubble.classList.remove("bubble-exit");
+
+      void genreBubble.offsetWidth;
+
+      genreBubble.classList.add("pop");
+
+      // Leave it visible before the next transition.
+      genreTimer = setTimeout(() => {
+
+        showNextGenre();
+
+      }, 2400);
+
+    }, 450);
+
+  }
+
+  function startGenreSequence() {
+
+    if (
+      genreSequenceStarted ||
+      !genreBubble ||
+      !genreStage
+    ) return;
+
+    genreSequenceStarted = true;
+
+    genreIsVisible = true;
+
+    genreIndex = 0;
+
+    showNextGenre();
+
+  }
+
+  function stopGenreSequence() {
+
+    genreIsVisible = false;
+
+    clearGenreTimer();
+
+    if (genreBubble) {
+      genreBubble.classList.remove("pop");
+      genreBubble.classList.add("bubble-exit");
     }
 
-    function showGenre() {
-      clearGenreParticles();
+    genreSequenceStarted = false;
 
-      genreBubble.classList.remove("is-popping");
-      genreBubble.classList.remove("is-active");
+  }
 
-      genreName.textContent = genres[currentGenre];
+  if (genreStage && "IntersectionObserver" in window) {
 
-      // Allow the browser to register the hidden state first.
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          genreBubble.classList.add("is-active");
+    genreObserver = new IntersectionObserver(
+      entries => {
+
+        entries.forEach(entry => {
+
+          if (entry.isIntersecting) {
+
+            if (!genreIsVisible) {
+              startGenreSequence();
+            }
+
+          } else {
+
+            stopGenreSequence();
+
+          }
+
         });
+
+      },
+      {
+        threshold: 0.3
+      }
+    );
+
+    genreObserver.observe(genreStage);
+
+  } else if (genreStage) {
+
+    startGenreSequence();
+
+  }
+
+
+  /* =====================================
+     8. PACKAGE SELECTION
+  ===================================== */
+
+  const packageLinks = document.querySelectorAll(
+    ".package-link[data-package]"
+  );
+
+  const packageSelect = document.getElementById("package");
+
+  packageLinks.forEach(link => {
+
+    link.addEventListener("click", () => {
+
+      const selectedPackage = link.dataset.package;
+
+      if (!packageSelect) return;
+
+      const matchingOption = Array.from(
+        packageSelect.options
+      ).find(option => option.textContent.includes(selectedPackage));
+
+      if (matchingOption) {
+        packageSelect.value = matchingOption.value;
+      }
+
+    });
+
+  });
+
+
+  /* =====================================
+     9. CONTACT FORM
+  ===================================== */
+
+  const contactForm = document.getElementById("contactForm");
+
+  if (contactForm) {
+
+    contactForm.addEventListener("submit", event => {
+
+      event.preventDefault();
+
+      if (!contactForm.reportValidity()) return;
+
+      const formData = new FormData(contactForm);
+
+      const name = formData.get("name") || "";
+      const email = formData.get("email") || "";
+      const author = formData.get("author") || "";
+      const book = formData.get("book") || "";
+      const genre = formData.get("genre") || "";
+      const selectedPackage = formData.get("package") || "";
+      const budget = formData.get("budget") || "";
+      const bookLink = formData.get("bookLink") || "";
+      const message = formData.get("message") || "";
+
+      const subject = `Website Enquiry - ${book || "New Enquiry"}`;
+
+      const emailBody = `
+NEW AV SQUAD STUDIOS ENQUIRY
+
+Name: ${name}
+Email: ${email}
+
+Author / Publishing Name: ${author}
+Book Title: ${book}
+Genre: ${genre}
+
+Interested Package: ${selectedPackage}
+Estimated Budget: ${budget}
+
+Book Link: ${bookLink}
+
+MESSAGE:
+${message}
+
+------------------------------
+Sent through the AV Squad Studios website.
+      `.trim();
+
+      const mailtoURL =
+        "mailto:hello.avsquad@gmail.com" +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(emailBody);
+
+      window.location.href = mailtoURL;
+
+    });
+
+  }
+
+
+  /* =====================================
+     10. CURRENT YEAR
+  ===================================== */
+
+  const currentYear = document.getElementById("currentYear");
+
+  if (currentYear) {
+    currentYear.textContent = new Date().getFullYear();
+  }
+
+
+  /* =====================================
+     11. SOCIAL LINKS
+  ===================================== */
+
+  const externalSocialLinks = document.querySelectorAll(
+    '.social-links a[target="_blank"], .footer-socials a[target="_blank"]'
+  );
+
+  externalSocialLinks.forEach(link => {
+
+    link.addEventListener("click", () => {
+
+      // External social links are opened in a new tab.
+
+    });
+
+  });
+
+
+  /* =====================================
+     12. SMOOTH ANCHOR NAVIGATION
+  ===================================== */
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+    anchor.addEventListener("click", event => {
+
+      const targetId = anchor.getAttribute("href");
+
+      if (!targetId || targetId === "#") return;
+
+      const target = document.querySelector(targetId);
+
+      if (!target) return;
+
+      event.preventDefault();
+
+      target.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start"
       });
 
-      // Keep the genre visible before popping.
-      const displayTime = reducedMotion ? 1600 : 1900;
-
-      genreTimer = window.setTimeout(() => {
-        popGenre();
-      }, displayTime);
-    }
-
-    function popGenre() {
-      createPopParticles();
-
-      genreBubble.classList.remove("is-active");
-      genreBubble.classList.add("is-popping");
-
-      genreTimer = window.setTimeout(() => {
-        genreBubble.classList.remove("is-popping");
-
-        // Wait until the previous bubble is fully gone.
-        currentGenre = (currentGenre + 1) % genres.length;
-
-        genreTimer = window.setTimeout(() => {
-          showGenre();
-        }, reducedMotion ? 700 : 500);
-
-      }, reducedMotion ? 150 : 450);
-    }
-
-    // Start the sequence when the section enters the viewport.
-    if ("IntersectionObserver" in window) {
-      const genreObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              if (!genreBubble.classList.contains("is-active")) {
-                showGenre();
-              }
-            } else {
-              window.clearTimeout(genreTimer);
-              genreBubble.classList.remove("is-active");
-              genreBubble.classList.remove("is-popping");
-              clearGenreParticles();
-            }
-          });
-        },
-        { threshold: 0.25 }
-      );
-
-      genreObserver.observe(genreStage);
-    } else {
-      showGenre();
-    }
-  }
-
-
-  /* =======================================================
-     6. PORTFOLIO VIDEO PLAYER
-     
-     Videos open inside a centered modal.
-     YouTube URLs are never displayed as text.
-     
-     For YouTube:
-     data-video="YOUTUBE_VIDEO_ID"
-     
-     For direct MP4:
-     data-video="https://example.com/video.mp4"
-     data-video-type="mp4"
-  ======================================================= */
-
-  const videoModal = document.querySelector(".video-modal");
-  const videoFrame = document.querySelector(".video-frame");
-  const videoTriggers = document.querySelectorAll("[data-video]");
-  const videoClose = document.querySelector(".video-close");
-
-  function closeVideo() {
-    if (!videoModal || !videoFrame) return;
-
-    videoModal.classList.remove("is-open");
-    videoModal.setAttribute("aria-hidden", "true");
-
-    // Removing the player stops the video.
-    videoFrame.innerHTML = "";
-
-    document.body.style.overflow = "";
-  }
-
-  function openVideo(trigger) {
-    if (!videoModal || !videoFrame) return;
-
-    const videoSource = trigger.dataset.video;
-    const videoType = trigger.dataset.videoType || "youtube";
-
-    if (!videoSource) return;
-
-    videoFrame.innerHTML = "";
-
-    if (videoType === "mp4") {
-      const video = document.createElement("video");
-
-      video.src = videoSource;
-      video.controls = true;
-      video.autoplay = true;
-      video.playsInline = true;
-      video.preload = "metadata";
-
-      videoFrame.appendChild(video);
-
-      const playPromise = video.play();
-
-      if (playPromise && typeof playPromise.catch === "function") {
-        playPromise.catch(() => {
-          // The viewer can start playback using the controls.
-        });
-      }
-    } else {
-      // Accept a video ID, not a visible YouTube URL.
-      const videoId = videoSource.trim();
-
-      if (!/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
-        console.error("Invalid YouTube video ID:", videoId);
-        return;
-      }
-
-      const iframe = document.createElement("iframe");
-
-      iframe.src =
-        `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
-
-      iframe.title = "AV Squad Studios video project";
-      iframe.allow =
-        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-      iframe.allowFullscreen = true;
-      iframe.referrerPolicy = "strict-origin-when-cross-origin";
-
-      videoFrame.appendChild(iframe);
-    }
-
-    videoModal.classList.add("is-open");
-    videoModal.setAttribute("aria-hidden", "false");
-
-    document.body.style.overflow = "hidden";
-  }
-
-  videoTriggers.forEach((trigger) => {
-    trigger.addEventListener("click", () => {
-      openVideo(trigger);
     });
-  });
 
-  if (videoClose) {
-    videoClose.addEventListener("click", closeVideo);
-  }
-
-  if (videoModal) {
-    videoModal.addEventListener("click", (event) => {
-      if (event.target === videoModal) {
-        closeVideo();
-      }
-    });
-  }
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeVideo();
-    }
   });
 
 
-  /* =======================================================
-     7. CURRENT YEAR IN FOOTER
-  ======================================================= */
+  /* =====================================
+     13. IMAGE FALLBACK
+  ===================================== */
 
-  const yearElement = document.querySelector("[data-current-year]");
+  document.querySelectorAll(".portfolio-video img").forEach(img => {
 
-  if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
-  }
+    img.addEventListener("error", () => {
 
+      const videoButton = img.closest(".portfolio-video");
 
-  /* =======================================================
-     8. CONTACT EMAIL COPY BUTTON
-     
-     Optional: add data-copy-email to a button.
-  ======================================================= */
+      const videoId = videoButton?.dataset.video;
 
-  const copyEmailButtons = document.querySelectorAll("[data-copy-email]");
+      if (!videoId) return;
 
-  copyEmailButtons.forEach((button) => {
-    button.addEventListener("click", async () => {
-      const email = button.dataset.copyEmail;
+      // Try YouTube's standard thumbnail if max resolution is unavailable.
+      if (img.src.includes("maxresdefault.jpg")) {
 
-      if (!email) return;
+        img.src =
+          `https://img.youtube.com/vi/${encodeURIComponent(videoId)}/hqdefault.jpg`;
 
-      try {
-        await navigator.clipboard.writeText(email);
-
-        const originalText = button.textContent;
-        button.textContent = "Copied!";
-
-        window.setTimeout(() => {
-          button.textContent = originalText;
-        }, 1800);
-
-      } catch (error) {
-        window.location.href = `mailto:${email}`;
       }
+
     });
+
   });
+
+
+  /* =====================================
+     14. PAGE INITIALIZATION
+  ===================================== */
+
+  updateHeader();
+
+  console.log("AV Squad Studios website initialized successfully.");
 
 });
