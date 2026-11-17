@@ -1,134 +1,450 @@
 
-const genres = [
-  "FANTASY",
-  "ROMANCE",
-  "THRILLER",
-  "MYSTERY",
-  "SCI-FI",
-  "HORROR",
-  "ADVENTURE",
-  "HISTORICAL",
-  "DRAMA",
-  "COMEDY",
-  "PARANORMAL",
-  "CRIME",
-  "LITERARY",
-  "YOUNG ADULT",
-  "CHILDREN'S",
-  "MEMOIR",
-  "BIOGRAPHY",
-  "DYSTOPIAN",
-  "SUSPENSE",
-  "SATIRE"
-];
+/* =========================================================
+   AV SQUAD STUDIOS — COMPLETE WEBSITE JAVASCRIPT
+========================================================= */
 
-const container = document.getElementById("bubbleContainer");
-const counter = document.getElementById("counter");
-const finalMessage = document.getElementById("finalMessage");
-const replayButton = document.getElementById("replayButton");
+document.addEventListener("DOMContentLoaded", () => {
+  /* =======================================================
+     1. CINEMATIC INTRO
+  ======================================================= */
 
-let timers = [];
-let currentIndex = 0;
+  const intro = document.querySelector(".intro-screen");
+  const skipIntro = document.querySelector(".intro-skip");
 
-function clearTimers() {
-  timers.forEach(clearTimeout);
-  timers = [];
-}
+  function closeIntro() {
+    if (!intro) return;
 
-function createParticles(x, y) {
-  for (let i = 0; i < 12; i++) {
-    const particle = document.createElement("span");
-    particle.className = "particle";
+    intro.classList.add("is-hidden");
 
-    const angle = Math.random() * Math.PI * 2;
-    const distance = 30 + Math.random() * 65;
-
-    particle.style.left = x + "%";
-    particle.style.top = y + "%";
-    particle.style.setProperty("--dx",
-      Math.cos(angle) * distance + "px");
-    particle.style.setProperty("--dy",
-      Math.sin(angle) * distance + "px");
-
-    container.appendChild(particle);
-
-    setTimeout(() => particle.remove(), 900);
-  }
-}
-
-function showGenre(index) {
-  if (index >= genres.length) {
-    finishAnimation();
-    return;
+    // Remove the intro from interaction after its transition.
+    window.setTimeout(() => {
+      intro.style.display = "none";
+    }, 1100);
   }
 
-  const positions = [
-    [12, 15], [37, 5], [70, 12], [85, 37],
-    [64, 65], [33, 70], [8, 48], [47, 37],
-    [78, 72], [20, 82], [53, 12], [91, 65],
-    [39, 45], [67, 35], [15, 30], [52, 82],
-    [82, 18], [29, 22], [73, 83], [46, 57]
+  if (intro) {
+    // Automatically close after approximately five seconds.
+    window.setTimeout(closeIntro, 5000);
+  }
+
+  if (skipIntro) {
+    skipIntro.addEventListener("click", closeIntro);
+  }
+
+
+  /* =======================================================
+     2. MOBILE NAVIGATION
+  ======================================================= */
+
+  const menuToggle = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+  const navItems = document.querySelectorAll(".nav-links a");
+
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("is-open");
+
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.innerHTML = isOpen ? "&times;" : "&#9776;";
+    });
+
+    navItems.forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.innerHTML = "&#9776;";
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      const clickedInsideMenu = navLinks.contains(event.target);
+      const clickedToggle = menuToggle.contains(event.target);
+
+      if (!clickedInsideMenu && !clickedToggle) {
+        navLinks.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.innerHTML = "&#9776;";
+      }
+    });
+  }
+
+
+  /* =======================================================
+     3. SCROLL REVEAL ANIMATIONS
+  ======================================================= */
+
+  const revealElements = document.querySelectorAll(".reveal");
+
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -35px 0px"
+      }
+    );
+
+    revealElements.forEach((element) => {
+      revealObserver.observe(element);
+    });
+  } else {
+    revealElements.forEach((element) => {
+      element.classList.add("is-visible");
+    });
+  }
+
+
+  /* =======================================================
+     4. ACTIVE NAVIGATION LINK
+  ======================================================= */
+
+  const sections = document.querySelectorAll("main section[id]");
+
+  if ("IntersectionObserver" in window && sections.length) {
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          navItems.forEach((link) => {
+            link.classList.toggle(
+              "active",
+              link.getAttribute("href") === `#${entry.target.id}`
+            );
+          });
+        });
+      },
+      {
+        rootMargin: "-35% 0px -55% 0px",
+        threshold: 0
+      }
+    );
+
+    sections.forEach((section) => {
+      sectionObserver.observe(section);
+    });
+  }
+
+
+  /* =======================================================
+     5. GENRE BUBBLE SEQUENCE
+     
+     One bubble appears.
+     One genre name is revealed.
+     It stays briefly.
+     The bubble pops and disappears.
+     The next genre appears only after the first is gone.
+  ======================================================= */
+
+  const genreStage = document.querySelector(".genre-stage");
+  const genreBubble = document.querySelector(".genre-bubble");
+  const genreName = document.querySelector(".genre-name");
+
+  const genres = [
+    "Fantasy",
+    "Romance",
+    "Thriller",
+    "Mystery",
+    "Science Fiction",
+    "Horror",
+    "Adventure",
+    "Historical Fiction",
+    "Drama",
+    "Comedy",
+    "Paranormal",
+    "Crime",
+    "Literary Fiction",
+    "Young Adult",
+    "Children's Fiction",
+    "Memoir",
+    "Biography",
+    "Dystopian",
+    "Suspense",
+    "Satire"
   ];
 
-  const [x, y] = positions[index];
-  const size = 75 + Math.random() * 45;
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-  const bubble = document.createElement("div");
-  bubble.className = "genre-bubble";
+  if (genreStage && genreBubble && genreName) {
+    let currentGenre = 0;
+    let genreTimer = null;
 
-  bubble.style.setProperty("--x", x + "%");
-  bubble.style.setProperty("--y", y + "%");
-  bubble.style.setProperty("--size", size + "px");
+    const particleCount = 12;
 
-  const name = document.createElement("span");
-  name.className = "genre-name";
-  name.textContent = genres[index];
+    function clearGenreParticles() {
+      genreStage
+        .querySelectorAll(".genre-particle")
+        .forEach((particle) => particle.remove());
+    }
 
-  bubble.appendChild(name);
-  container.appendChild(bubble);
+    function createPopParticles() {
+      clearGenreParticles();
 
-  requestAnimationFrame(() => {
-    bubble.classList.add("pop");
+      if (reducedMotion) return;
+
+      const stageRect = genreStage.getBoundingClientRect();
+      const bubbleRect = genreBubble.getBoundingClientRect();
+
+      const centerX =
+        bubbleRect.left - stageRect.left + bubbleRect.width / 2;
+
+      const centerY =
+        bubbleRect.top - stageRect.top + bubbleRect.height / 2;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement("span");
+        const angle = (Math.PI * 2 * i) / particleCount;
+        const distance = 65 + Math.random() * 55;
+
+        particle.className = "genre-particle";
+
+        particle.style.left = `${centerX}px`;
+        particle.style.top = `${centerY}px`;
+        particle.style.setProperty(
+          "--dx",
+          `${Math.cos(angle) * distance}px`
+        );
+        particle.style.setProperty(
+          "--dy",
+          `${Math.sin(angle) * distance}px`
+        );
+
+        genreStage.appendChild(particle);
+
+        window.setTimeout(() => particle.remove(), 750);
+      }
+    }
+
+    function showGenre() {
+      clearGenreParticles();
+
+      genreBubble.classList.remove("is-popping");
+      genreBubble.classList.remove("is-active");
+
+      genreName.textContent = genres[currentGenre];
+
+      // Allow the browser to register the hidden state first.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          genreBubble.classList.add("is-active");
+        });
+      });
+
+      // Keep the genre visible before popping.
+      const displayTime = reducedMotion ? 1600 : 1900;
+
+      genreTimer = window.setTimeout(() => {
+        popGenre();
+      }, displayTime);
+    }
+
+    function popGenre() {
+      createPopParticles();
+
+      genreBubble.classList.remove("is-active");
+      genreBubble.classList.add("is-popping");
+
+      genreTimer = window.setTimeout(() => {
+        genreBubble.classList.remove("is-popping");
+
+        // Wait until the previous bubble is fully gone.
+        currentGenre = (currentGenre + 1) % genres.length;
+
+        genreTimer = window.setTimeout(() => {
+          showGenre();
+        }, reducedMotion ? 700 : 500);
+
+      }, reducedMotion ? 150 : 450);
+    }
+
+    // Start the sequence when the section enters the viewport.
+    if ("IntersectionObserver" in window) {
+      const genreObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (!genreBubble.classList.contains("is-active")) {
+                showGenre();
+              }
+            } else {
+              window.clearTimeout(genreTimer);
+              genreBubble.classList.remove("is-active");
+              genreBubble.classList.remove("is-popping");
+              clearGenreParticles();
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+
+      genreObserver.observe(genreStage);
+    } else {
+      showGenre();
+    }
+  }
+
+
+  /* =======================================================
+     6. PORTFOLIO VIDEO PLAYER
+     
+     Videos open inside a centered modal.
+     YouTube URLs are never displayed as text.
+     
+     For YouTube:
+     data-video="YOUTUBE_VIDEO_ID"
+     
+     For direct MP4:
+     data-video="https://example.com/video.mp4"
+     data-video-type="mp4"
+  ======================================================= */
+
+  const videoModal = document.querySelector(".video-modal");
+  const videoFrame = document.querySelector(".video-frame");
+  const videoTriggers = document.querySelectorAll("[data-video]");
+  const videoClose = document.querySelector(".video-close");
+
+  function closeVideo() {
+    if (!videoModal || !videoFrame) return;
+
+    videoModal.classList.remove("is-open");
+    videoModal.setAttribute("aria-hidden", "true");
+
+    // Removing the player stops the video.
+    videoFrame.innerHTML = "";
+
+    document.body.style.overflow = "";
+  }
+
+  function openVideo(trigger) {
+    if (!videoModal || !videoFrame) return;
+
+    const videoSource = trigger.dataset.video;
+    const videoType = trigger.dataset.videoType || "youtube";
+
+    if (!videoSource) return;
+
+    videoFrame.innerHTML = "";
+
+    if (videoType === "mp4") {
+      const video = document.createElement("video");
+
+      video.src = videoSource;
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      video.preload = "metadata";
+
+      videoFrame.appendChild(video);
+
+      const playPromise = video.play();
+
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => {
+          // The viewer can start playback using the controls.
+        });
+      }
+    } else {
+      // Accept a video ID, not a visible YouTube URL.
+      const videoId = videoSource.trim();
+
+      if (!/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
+        console.error("Invalid YouTube video ID:", videoId);
+        return;
+      }
+
+      const iframe = document.createElement("iframe");
+
+      iframe.src =
+        `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+
+      iframe.title = "AV Squad Studios video project";
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+
+      videoFrame.appendChild(iframe);
+    }
+
+    videoModal.classList.add("is-open");
+    videoModal.setAttribute("aria-hidden", "false");
+
+    document.body.style.overflow = "hidden";
+  }
+
+  videoTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      openVideo(trigger);
+    });
   });
 
-  createParticles(x, y);
-
-  currentIndex++;
-  counter.textContent =
-    String(currentIndex).padStart(2, "0") + " / 20";
-
-  if (index + 1 < genres.length) {
-    const timer = setTimeout(() => {
-      showGenre(index + 1);
-    }, 650);
-
-    timers.push(timer);
-  } else {
-    const timer = setTimeout(finishAnimation, 1400);
-    timers.push(timer);
+  if (videoClose) {
+    videoClose.addEventListener("click", closeVideo);
   }
-}
 
-function finishAnimation() {
-  finalMessage.classList.add("show");
-}
+  if (videoModal) {
+    videoModal.addEventListener("click", (event) => {
+      if (event.target === videoModal) {
+        closeVideo();
+      }
+    });
+  }
 
-function startAnimation() {
-  clearTimers();
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeVideo();
+    }
+  });
 
-  container.innerHTML = "";
-  finalMessage.classList.remove("show");
 
-  currentIndex = 0;
-  counter.textContent = "01 / 20";
+  /* =======================================================
+     7. CURRENT YEAR IN FOOTER
+  ======================================================= */
 
-  const timer = setTimeout(() => {
-    showGenre(0);
-  }, 700);
+  const yearElement = document.querySelector("[data-current-year]");
 
-  timers.push(timer);
-}
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
 
-replayButton.addEventListener("click", startAnimation);
 
-startAnimation();
+  /* =======================================================
+     8. CONTACT EMAIL COPY BUTTON
+     
+     Optional: add data-copy-email to a button.
+  ======================================================= */
+
+  const copyEmailButtons = document.querySelectorAll("[data-copy-email]");
+
+  copyEmailButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      const email = button.dataset.copyEmail;
+
+      if (!email) return;
+
+      try {
+        await navigator.clipboard.writeText(email);
+
+        const originalText = button.textContent;
+        button.textContent = "Copied!";
+
+        window.setTimeout(() => {
+          button.textContent = originalText;
+        }, 1800);
+
+      } catch (error) {
+        window.location.href = `mailto:${email}`;
+      }
+    });
+  });
+
+});
