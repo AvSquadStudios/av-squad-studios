@@ -4,319 +4,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AV Squad Studios creates cinematic book trailers, promotional films and author marketing campaigns.">
-  <title>AV Squad Studios | Visuals. Trailers. Stories.</title>
+  <meta name="theme-color" content="#050812">
+  <title>AV Squad Studios | A Universe of Stories</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>
-    .genre-strip {
-      overflow: hidden;
-      padding: 55px 0;
-      background: #080d17;
-      border-top: 1px solid rgba(49,184,255,.18);
-      border-bottom: 1px solid rgba(49,184,255,.18);
-    }
-    .genre-heading {
-      text-align: center;
-      color: #31b8ff;
-      font-size: 12px;
-      letter-spacing: 5px;
-      margin-bottom: 28px;
-    }
-    .genre-track {
-      display: flex;
-      width: max-content;
-      animation: genreScroll 35s linear infinite;
-    }
-    .genre-strip:hover .genre-track {
-      animation-play-state: paused;
-    }
-    .genre-group {
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-    }
-    .genre-item {
-      color: #fff;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(25px, 4vw, 42px);
-      letter-spacing: 2px;
-      padding: 0 30px;
-      white-space: nowrap;
-      transition: color .3s, text-shadow .3s;
-    }
-    .genre-item:hover {
-      color: #31b8ff;
-      text-shadow: 0 0 18px #087cff;
-    }
-    .genre-dot {
-      color: #168cff;
-      font-size: 24px;
-    }
-    @keyframes genreScroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .genre-track { animation: none; }
-    }
-  </style>
 </head>
-
 <body>
 
-  <div class="ambient-background">
-    <div class="light-trail trail-one"></div>
-    <div class="light-trail trail-two"></div>
-    <div class="particles"></div>
-  </div>
+  <main class="universe">
 
-  <header class="header">
-    <a href="#home" class="logo">
-      <span>AV SQUAD</span>
-      <small>STUDIOS</small>
-    </a>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
 
-    <nav class="nav">
-      <a href="#about">ABOUT</a>
-      <a href="#services">SERVICES</a>
-      <a href="#work">OUR WORK</a>
-      <a href="#pricing">PRICING</a>
-      <a href="#contact">CONTACT</a>
-    </nav>
+    <div class="top-label">
+      <span class="status-dot"></span>
+      AV SQUAD STUDIOS PRESENTS
+    </div>
 
-    <a href="#contact" class="header-cta">START A PROJECT ↗</a>
-  </header>
+    <section class="intro">
+      <p class="eyebrow">A UNIVERSE OF STORIES</p>
 
-  <main>
+      <h1>
+        EVERY STORY HAS A
+        <span>WORLD.</span>
+      </h1>
 
-    <section class="hero" id="home">
-      <div class="hero-content">
-        <p class="eyebrow">AV SQUAD STUDIOS PRESENTS</p>
-        <h1>WE TURN STORIES<br>INTO <span>CINEMA.</span></h1>
-        <p class="hero-description">
-          We transform books and creative ideas into cinematic visual
-          experiences designed to capture attention and leave an impression.
-        </p>
-        <div class="hero-buttons">
-          <a href="#work" class="primary-btn">EXPLORE OUR WORK ↗</a>
-          <a href="#contact" class="secondary-btn">LET'S CREATE</a>
-        </div>
-      </div>
-      <div class="hero-bottom">
-        <span>VISUALS. TRAILERS. STORIES.</span>
-        <span>CREATIVE PRODUCTION STUDIO</span>
+      <p class="subtitle">
+        We bring every world to life through cinematic storytelling.
+      </p>
+    </section>
+
+    <section class="bubble-stage" id="bubbleStage">
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+      <div class="center-glow"></div>
+
+      <div class="bubble-container" id="bubbleContainer"></div>
+
+      <div class="final-message" id="finalMessage">
+        <div class="final-orb"></div>
+        <p class="final-small">TWENTY GENRES. INFINITE POSSIBILITIES.</p>
+        <h2>YOUR STORY.<br><span>OUR CINEMATIC VISION.</span></h2>
+        <p class="final-caption">AV SQUAD STUDIOS</p>
+        <button id="replayButton">EXPERIENCE AGAIN ↗</button>
       </div>
     </section>
 
-    <!-- ANIMATED GENRE SHOWCASE -->
-    <section class="genre-strip">
-      <p class="genre-heading">STORIES OF EVERY KIND</p>
-
-      <div class="genre-track">
-        <div class="genre-group">
-          <span class="genre-item">THRILLER</span><span class="genre-dot">✦</span>
-          <span class="genre-item">ROMANCE</span><span class="genre-dot">✦</span>
-          <span class="genre-item">FANTASY</span><span class="genre-dot">✦</span>
-          <span class="genre-item">MYSTERY</span><span class="genre-dot">✦</span>
-          <span class="genre-item">HORROR</span><span class="genre-dot">✦</span>
-          <span class="genre-item">SCI-FI</span><span class="genre-dot">✦</span>
-          <span class="genre-item">MEMOIR</span><span class="genre-dot">✦</span>
-          <span class="genre-item">DRAMA</span><span class="genre-dot">✦</span>
-          <span class="genre-item">ADVENTURE</span><span class="genre-dot">✦</span>
-          <span class="genre-item">HISTORICAL FICTION</span><span class="genre-dot">✦</span>
-        </div>
-
-        <div class="genre-group" aria-hidden="true">
-          <span class="genre-item">THRILLER</span><span class="genre-dot">✦</span>
-          <span class="genre-item">ROMANCE</span><span class="genre-dot">✦</span>
-          <span class="genre-item">FANTASY</span><span class="genre-dot">✦</span>
-          <span class="genre-item">MYSTERY</span><span class="genre-dot">✦</span>
-          <span class="genre-item">HORROR</span><span class="genre-dot">✦</span>
-          <span class="genre-item">SCI-FI</span><span class="genre-dot">✦</span>
-          <span class="genre-item">MEMOIR</span><span class="genre-dot">✦</span>
-          <span class="genre-item">DRAMA</span><span class="genre-dot">✦</span>
-          <span class="genre-item">ADVENTURE</span><span class="genre-dot">✦</span>
-          <span class="genre-item">HISTORICAL FICTION</span><span class="genre-dot">✦</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="about" id="about">
-      <div class="section-label">01 / WHO WE ARE</div>
-      <div class="about-content">
-        <h2>MORE THAN<br>JUST <span>VISUALS.</span></h2>
-        <p>
-          At AV Squad Studios, we believe every story deserves to be seen,
-          felt and remembered. We are a creative production studio bringing
-          written stories to life through cinematic visuals and strategic
-          promotional content.
-        </p>
-        <p>
-          From the first frame to the final reveal, our focus is creating
-          visual experiences that give stories a presence beyond the page.
-        </p>
-      </div>
-    </section>
-
-    <section class="services" id="services">
-      <div class="section-label">02 / WHAT WE DO</div>
-      <h2>CREATIVE SERVICES.<br><span>CINEMATIC EXECUTION.</span></h2>
-
-      <div class="service-grid">
-        <article class="service-card">
-          <span>01</span>
-          <h3>CINEMATIC BOOK TRAILERS</h3>
-          <p>Bring characters, worlds and unforgettable moments to life through cinematic storytelling.</p>
-        </article>
-
-        <article class="service-card">
-          <span>02</span>
-          <h3>PRELAUNCH CAMPAIGNS</h3>
-          <p>Build anticipation around upcoming releases with visual content designed for launch campaigns.</p>
-        </article>
-
-        <article class="service-card">
-          <span>03</span>
-          <h3>PROMOTIONAL FILMS</h3>
-          <p>Give your creative projects a powerful visual identity through tailored promotional films.</p>
-        </article>
-
-        <article class="service-card">
-          <span>04</span>
-          <h3>AUTHOR MARKETING</h3>
-          <p>Develop visual promotional content that helps authors present their books to new audiences.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="work" id="work">
-      <div class="section-label">03 / SELECTED PRODUCTIONS</div>
-      <h2>STORIES DESERVE<br><span>THE BIG SCREEN FEEL.</span></h2>
-
-      <div class="work-grid">
-        <article class="work-card">
-          <div class="work-image">
-            <span>PROJECT 01</span>
-          </div>
-          <h3>CINEMATIC BOOK TRAILER</h3>
-          <p>BOOK PROMOTION</p>
-        </article>
-
-        <article class="work-card">
-          <div class="work-image">
-            <span>PROJECT 02</span>
-          </div>
-          <h3>STORY-DRIVEN VISUALS</h3>
-          <p>CREATIVE PRODUCTION</p>
-        </article>
-
-        <article class="work-card">
-          <div class="work-image">
-            <span>PROJECT 03</span>
-          </div>
-          <h3>AUTHOR CAMPAIGN</h3>
-          <p>BOOK MARKETING</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="pricing" id="pricing">
-      <div class="section-label">04 / INVEST IN YOUR STORY</div>
-      <h2>PRODUCTION THAT<br><span>MATCHES YOUR VISION.</span></h2>
-      <p class="pricing-intro">Every project is different. These are our starting rates.</p>
-
-      <div class="pricing-grid">
-        <article class="price-card">
-          <h3>SOCIAL REEL</h3>
-          <p>15-SECOND VIDEO</p>
-          <div class="price">$175</div>
-          <span>STARTING AT</span>
-        </article>
-
-        <article class="price-card">
-          <h3>PRELAUNCH TRAILER</h3>
-          <p>BOOK PRELAUNCH</p>
-          <div class="price">$350</div>
-          <span>STARTING AT</span>
-        </article>
-
-        <article class="price-card featured">
-          <h3>CINEMATIC TRAILER</h3>
-          <p>30-SECOND VIDEO</p>
-          <div class="price">$500</div>
-          <span>STARTING AT</span>
-        </article>
-
-        <article class="price-card">
-          <h3>EXTENDED CINEMATIC</h3>
-          <p>60–75-SECOND VIDEO</p>
-          <div class="price">$1,200</div>
-          <span>STARTING AT</span>
-        </article>
-
-        <article class="price-card">
-          <h3>HOLLYWOOD TRAILER</h3>
-          <p>FULL-SCALE PRODUCTION</p>
-          <div class="price">$2,500</div>
-          <span>STARTING AT</span>
-        </article>
-      </div>
-    </section>
-
-    <section class="process" id="process">
-      <div class="section-label">05 / HOW WE WORK</div>
-      <h2>FROM IDEA TO<br><span>FINAL FRAME.</span></h2>
-
-      <div class="process-grid">
-        <article class="process-step">
-          <span>01</span>
-          <h3>DISCOVERY</h3>
-          <p>We learn about your book, vision and creative direction.</p>
-        </article>
-
-        <article class="process-step">
-          <span>02</span>
-          <h3>CONCEPT</h3>
-          <p>We develop the visual direction and storytelling approach.</p>
-        </article>
-
-        <article class="process-step">
-          <span>03</span>
-          <h3>PRODUCTION</h3>
-          <p>We bring the approved concept to life through cinematic production.</p>
-        </article>
-
-        <article class="process-step">
-          <span>04</span>
-          <h3>DELIVERY</h3>
-          <p>Your finished visual is prepared for its intended promotional use.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="contact" id="contact">
-      <div class="section-label">06 / YOUR STORY STARTS HERE</div>
-      <h2>LET'S MAKE<br><span>SOMETHING UNFORGETTABLE.</span></h2>
-      <p>Have a story that deserves a cinematic experience? Let's talk.</p>
-      <a href="mailto:YOUR_EMAIL_HERE" class="primary-btn">START A PROJECT ↗</a>
-
-      <div class="social-links">
-        <a href="YOUR_YOUTUBE_URL" target="_blank" rel="noopener">YOUTUBE</a>
-        <a href="YOUR_INSTAGRAM_URL" target="_blank" rel="noopener">INSTAGRAM</a>
-        <a href="YOUR_TIKTOK_URL" target="_blank" rel="noopener">TIKTOK</a>
-      </div>
-    </section>
+    <div class="bottom-label">
+      <span>IMAGINATION HAS NO LIMITS</span>
+      <span class="counter" id="counter">01 / 20</span>
+    </div>
 
   </main>
-
-  <footer>
-    <a href="#home" class="logo">
-      <span>AV SQUAD</span>
-      <small>STUDIOS</small>
-    </a>
-    <p>VISUALS. TRAILERS. STORIES.</p>
-    <p>© 2026 AV SQUAD STUDIOS. ALL RIGHTS RESERVED.</p>
-  </footer>
 
   <script src="script.js"></script>
 </body>
