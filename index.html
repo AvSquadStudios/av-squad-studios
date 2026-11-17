@@ -2,63 +2,876 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#050812">
-  <title>AV Squad Studios | A Universe of Stories</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050914">
+
+    <meta name="description" content="AV Squad Studios — Cinematic book trailers, visual storytelling and creative production.">
+
+    <title>AV Squad Studios | Visuals. Trailers. Stories.</title>
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- MAIN STYLESHEET -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <main class="universe">
+<!-- =====================================
+     CINEMATIC INTRO
+===================================== -->
 
-    <div class="ambient ambient-one"></div>
-    <div class="ambient ambient-two"></div>
-    <div class="ambient ambient-three"></div>
+<div class="intro-screen" id="introScreen">
 
-    <div class="top-label">
-      <span class="status-dot"></span>
-      AV SQUAD STUDIOS PRESENTS
+    <div class="intro-background"></div>
+    <div class="intro-light intro-light-one"></div>
+    <div class="intro-light intro-light-two"></div>
+
+    <div class="intro-content">
+
+        <div class="intro-logo">
+            <span>AV</span>
+        </div>
+
+        <p class="intro-kicker">
+            A CREATIVE PRODUCTION HOUSE
+        </p>
+
+        <h1 class="intro-name">
+            AV SQUAD
+            <span>STUDIOS</span>
+        </h1>
+
+        <p class="intro-tagline">
+            VISUALS. TRAILERS. STORIES.
+        </p>
+
+        <div class="intro-progress">
+            <span></span>
+        </div>
+
     </div>
 
-    <section class="intro">
-      <p class="eyebrow">A UNIVERSE OF STORIES</p>
+    <button class="intro-skip" id="skipIntro">
+        SKIP INTRO ↗
+    </button>
 
-      <h1>
-        EVERY STORY HAS A
-        <span>WORLD.</span>
-      </h1>
+</div>
 
-      <p class="subtitle">
-        We bring every world to life through cinematic storytelling.
-      </p>
-    </section>
 
-    <section class="bubble-stage" id="bubbleStage">
-      <div class="orbit orbit-one"></div>
-      <div class="orbit orbit-two"></div>
-      <div class="center-glow"></div>
+<!-- =====================================
+     MAIN WEBSITE
+===================================== -->
 
-      <div class="bubble-container" id="bubbleContainer"></div>
+<div class="site-shell" id="siteShell">
 
-      <div class="final-message" id="finalMessage">
-        <div class="final-orb"></div>
-        <p class="final-small">TWENTY GENRES. INFINITE POSSIBILITIES.</p>
-        <h2>YOUR STORY.<br><span>OUR CINEMATIC VISION.</span></h2>
-        <p class="final-caption">AV SQUAD STUDIOS</p>
-        <button id="replayButton">EXPERIENCE AGAIN ↗</button>
-      </div>
-    </section>
+    <!-- GLOBAL BACKGROUND -->
 
-    <div class="bottom-label">
-      <span>IMAGINATION HAS NO LIMITS</span>
-      <span class="counter" id="counter">01 / 20</span>
+    <div class="ambient-background">
+
+        <div class="ambient-light ambient-one"></div>
+        <div class="ambient-light ambient-two"></div>
+        <div class="ambient-light ambient-three"></div>
+
+        <div class="background-grid"></div>
+
+        <div class="background-particles" id="backgroundParticles"></div>
+
     </div>
 
-  </main>
 
-  <script src="script.js"></script>
+    <!-- =====================================
+         NAVIGATION
+    ====================================== -->
+
+    <header class="site-header">
+
+        <a href="#home" class="brand">
+
+            <span class="brand-logo">AV</span>
+
+            <span class="brand-name">
+                <strong>AV SQUAD</strong>
+                <small>STUDIOS</small>
+            </span>
+
+        </a>
+
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+        </button>
+
+
+        <nav class="main-nav" id="mainNav">
+
+            <a href="#home" class="nav-link active">Home</a>
+
+            <a href="#portfolio" class="nav-link">Portfolio</a>
+
+            <a href="#services" class="nav-link">Services</a>
+
+            <a href="#about" class="nav-link">About</a>
+
+            <a href="#contact" class="nav-button">
+                Let's Talk <span>↗</span>
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =====================================
+         HOME SECTION
+    ====================================== -->
+
+    <main>
+
+    <section class="hero section-wrap" id="home">
+
+        <div class="hero-content reveal">
+
+            <p class="eyebrow">
+                <span></span>
+                STORIES DESERVE TO BE SEEN
+            </p>
+
+
+            <h1>
+                WE TURN STORIES
+                INTO
+                <em>EXPERIENCES.</em>
+            </h1>
+
+
+            <p class="hero-description">
+                We transform written stories into cinematic visual experiences.
+
+                From captivating book trailers to creative visual campaigns,
+                we give imagination a screen of its own.
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a href="#portfolio" class="button-primary">
+                    EXPLORE OUR WORK
+                    <span>↗</span>
+                </a>
+
+                <a href="#contact" class="button-secondary">
+                    START A PROJECT
+                </a>
+
+            </div>
+
+
+            <div class="hero-bottom-note">
+
+                <span class="online-dot"></span>
+
+                CREATIVITY WITHOUT LIMITS
+
+            </div>
+
+        </div>
+
+
+
+        <!-- HERO VISUAL -->
+
+        <div class="hero-visual reveal">
+
+            <div class="hero-ring ring-one"></div>
+
+            <div class="hero-ring ring-two"></div>
+
+            <div class="hero-ring ring-three"></div>
+
+
+            <div class="hero-sphere">
+
+                <div class="sphere-inner"></div>
+
+                <div class="sphere-highlight"></div>
+
+                <div class="sphere-text">
+                    STORY<br>
+                    IN<br>
+                    MOTION
+                </div>
+
+            </div>
+
+
+            <div class="hero-light-streak streak-one"></div>
+
+            <div class="hero-light-streak streak-two"></div>
+
+
+            <span class="visual-label label-one">
+                IMAGINE / 001
+            </span>
+
+            <span class="visual-label label-two">
+                CREATE / 002
+            </span>
+
+        </div>
+
+
+        <a href="#genres" class="scroll-indicator">
+            <span></span>
+            DISCOVER OUR WORLD
+        </a>
+
+    </section>
+
+
+
+    <!-- =====================================
+         GENRE BUBBLE EXPERIENCE
+    ====================================== -->
+
+    <section class="genre-section section-wrap" id="genres">
+
+
+        <div class="genre-intro reveal">
+
+            <p class="eyebrow">
+                <span></span>
+                THE WORLD OF STORYTELLING
+            </p>
+
+
+            <h2>
+                EVERY STORY
+                HAS A
+                <em>WORLD.</em>
+            </h2>
+
+
+            <p>
+                Different genres. Different emotions.
+                Different worlds waiting to be discovered.
+
+                Whatever the story, we find its visual identity
+                and bring it to life.
+            </p>
+
+        </div>
+
+
+
+        <div class="genre-experience reveal">
+
+
+            <div class="genre-stage" id="genreStage">
+
+
+                <!-- CIRCULAR BACKGROUND DETAILS -->
+
+                <div class="genre-orbit orbit-one"></div>
+
+                <div class="genre-orbit orbit-two"></div>
+
+                <div class="genre-orbit orbit-three"></div>
+
+
+                <div class="genre-center-glow"></div>
+
+
+                <!-- SINGLE BUBBLE -->
+
+                <div class="genre-bubble" id="genreBubble">
+
+                    <span class="bubble-reflection"></span>
+
+                    <span class="bubble-genre" id="genreWord">
+                        FANTASY
+                    </span>
+
+                </div>
+
+
+                <!-- POP PARTICLES -->
+
+                <div class="genre-particles" id="genreParticles"></div>
+
+
+                <!-- PROGRESS -->
+
+                <div class="genre-counter" id="genreCounter">
+
+                    01 <span>/</span> 20
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="genre-footer">
+
+                <span>ONE STORY AT A TIME</span>
+
+                <div class="genre-progress">
+                    <span id="genreProgress"></span>
+                </div>
+
+                <span>20 WORLDS</span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="genre-closing reveal">
+
+            <p>
+                NO TWO STORIES ARE THE SAME.
+            </p>
+
+            <h3>
+                YOUR STORY.
+                <em>OUR CINEMATIC VISION.</em>
+            </h3>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         PORTFOLIO
+    ====================================== -->
+
+    <section class="portfolio-section section-wrap" id="portfolio">
+
+
+        <div class="section-heading reveal">
+
+            <div>
+
+                <p class="eyebrow">
+                    <span></span>
+                    SELECTED CREATIONS
+                </p>
+
+                <h2>
+                    OUR WORK.
+                    <em>OUR WORLD.</em>
+                </h2>
+
+            </div>
+
+
+            <p class="section-description">
+                Every project begins with an idea.
+                Every finished creation tells a story.
+            </p>
+
+        </div>
+
+
+
+        <div class="portfolio-grid">
+
+
+            <!-- PROJECT ONE -->
+
+            <article class="project-card project-large reveal">
+
+                <button
+                    class="project-preview"
+                    type="button"
+                    data-video=""
+                    data-title="Cinematic Book Trailer">
+
+                    <div class="project-art art-one">
+
+                        <span class="project-index">
+                            PROJECT / 001
+                        </span>
+
+                        <span class="project-play">
+                            ▶
+                        </span>
+
+                        <span class="project-art-title">
+                            STORIES<br>IN MOTION
+                        </span>
+
+                    </div>
+
+                </button>
+
+
+                <div class="project-info">
+
+                    <div>
+                        <h3>CINEMATIC BOOK TRAILER</h3>
+
+                        <p>BOOK TRAILER / VISUAL STORYTELLING</p>
+                    </div>
+
+                    <span>01 ↗</span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- PROJECT TWO -->
+
+            <article class="project-card reveal">
+
+                <button
+                    class="project-preview"
+                    type="button"
+                    data-video=""
+                    data-title="Author Promotional Film">
+
+                    <div class="project-art art-two">
+
+                        <span class="project-index">
+                            PROJECT / 002
+                        </span>
+
+                        <span class="project-play">
+                            ▶
+                        </span>
+
+                    </div>
+
+                </button>
+
+
+                <div class="project-info">
+
+                    <div>
+                        <h3>AUTHOR PROMOTION</h3>
+
+                        <p>AUTHOR VISUAL CAMPAIGN</p>
+                    </div>
+
+                    <span>02 ↗</span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- PROJECT THREE -->
+
+            <article class="project-card reveal">
+
+                <button
+                    class="project-preview"
+                    type="button"
+                    data-video=""
+                    data-title="Creative Visual Campaign">
+
+                    <div class="project-art art-three">
+
+                        <span class="project-index">
+                            PROJECT / 003
+                        </span>
+
+                        <span class="project-play">
+                            ▶
+                        </span>
+
+                    </div>
+
+                </button>
+
+
+                <div class="project-info">
+
+                    <div>
+                        <h3>CREATIVE VISUALS</h3>
+
+                        <p>DIGITAL CREATIVE PRODUCTION</p>
+                    </div>
+
+                    <span>03 ↗</span>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+
+        <p class="portfolio-caption">
+            MORE STORIES. MORE POSSIBILITIES. MORE CREATIVE WORLDS.
+        </p>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         SERVICES
+    ====================================== -->
+
+    <section class="services-section section-wrap" id="services">
+
+
+        <div class="services-intro reveal">
+
+            <p class="eyebrow">
+                <span></span>
+                WHAT WE DO
+            </p>
+
+
+            <h2>
+                CREATIVE
+                THINKING.
+                <em>CINEMATIC EXECUTION.</em>
+            </h2>
+
+
+            <p>
+                We combine storytelling, visual creativity
+                and production to create memorable experiences.
+            </p>
+
+        </div>
+
+
+
+        <div class="services-list">
+
+
+            <article class="service-item reveal">
+
+                <span class="service-number">01</span>
+
+                <div>
+
+                    <h3>CINEMATIC BOOK TRAILERS</h3>
+
+                    <p>
+                        Film-inspired trailers that capture the
+                        atmosphere, characters, emotion and tension
+                        of your book.
+                    </p>
+
+                </div>
+
+                <span class="service-arrow">↗</span>
+
+            </article>
+
+
+
+            <article class="service-item reveal">
+
+                <span class="service-number">02</span>
+
+                <div>
+
+                    <h3>AUTHOR PROMOTIONAL VIDEOS</h3>
+
+                    <p>
+                        Professional visual introductions that
+                        showcase authors, their personalities
+                        and their literary work.
+                    </p>
+
+                </div>
+
+                <span class="service-arrow">↗</span>
+
+            </article>
+
+
+
+            <article class="service-item reveal">
+
+                <span class="service-number">03</span>
+
+                <div>
+
+                    <h3>BOOK VISUAL DESIGN</h3>
+
+                    <p>
+                        Creative promotional visuals, launch
+                        graphics and marketing assets designed
+                        around your book's identity.
+                    </p>
+
+                </div>
+
+                <span class="service-arrow">↗</span>
+
+            </article>
+
+
+
+            <article class="service-item reveal">
+
+                <span class="service-number">04</span>
+
+                <div>
+
+                    <h3>SOCIAL MEDIA VIDEO CONTENT</h3>
+
+                    <p>
+                        Engaging short-form videos and promotional
+                        content created to introduce your work
+                        to new audiences.
+                    </p>
+
+                </div>
+
+                <span class="service-arrow">↗</span>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         ABOUT
+    ====================================== -->
+
+    <section class="about-section section-wrap" id="about">
+
+
+        <div class="about-visual reveal">
+
+            <div class="about-orbit orbit-a"></div>
+
+            <div class="about-orbit orbit-b"></div>
+
+
+            <div class="about-monogram">
+                AV
+            </div>
+
+
+            <div class="about-visual-caption">
+                CREATIVITY WITH PURPOSE.
+            </div>
+
+        </div>
+
+
+
+        <div class="about-content reveal">
+
+            <p class="eyebrow">
+                <span></span>
+                BEHIND THE STUDIO
+            </p>
+
+
+            <h2>
+                WE DON'T JUST
+                CREATE VISUALS.
+                <em>WE CREATE EXPERIENCES.</em>
+            </h2>
+
+
+            <p>
+                AV Squad Studios is a creative production studio
+                dedicated to bringing stories to life through
+                cinematic visuals and thoughtful creative execution.
+            </p>
+
+
+            <p>
+                We believe that every book has a world inside it.
+                Every character has a story.
+                Every moment has the potential to become something
+                unforgettable on screen.
+            </p>
+
+
+            <p>
+                Our mission is to bridge the gap between imagination
+                and visual storytelling.
+            </p>
+
+
+            <a href="#contact" class="text-link">
+                LET'S CREATE SOMETHING
+                <span>↗</span>
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         CONTACT
+    ====================================== -->
+
+    <section class="contact-section section-wrap" id="contact">
+
+
+        <div class="contact-panel reveal">
+
+            <div class="contact-light"></div>
+
+
+            <p class="eyebrow">
+                <span></span>
+                YOUR NEXT CREATIVE PROJECT STARTS HERE
+            </p>
+
+
+            <h2>
+                LET'S MAKE
+                SOMETHING
+                <em>UNFORGETTABLE.</em>
+            </h2>
+
+
+            <p>
+                Have a book, an idea or a story you want
+                to bring to life?
+
+                Let's talk about what we can create together.
+            </p>
+
+
+            <!-- CHANGE EMAIL ADDRESS TO YOUR REAL BUSINESS EMAIL -->
+
+            <a
+                href="mailto:YOUR_EMAIL@example.com?subject=Project%20Inquiry%20-%20AV%20Squad%20Studios"
+                class="button-primary">
+
+                START A CONVERSATION
+
+                <span>↗</span>
+
+            </a>
+
+
+            <div class="contact-signature">
+                AV SQUAD STUDIOS<br>
+                VISUALS. TRAILERS. STORIES.
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer class="site-footer section-wrap">
+
+
+        <a href="#home" class="brand">
+
+            <span class="brand-logo">AV</span>
+
+            <span class="brand-name">
+                <strong>AV SQUAD</strong>
+                <small>STUDIOS</small>
+            </span>
+
+        </a>
+
+
+        <p>
+            IMAGINATION DESERVES A SCREEN.
+        </p>
+
+
+        <span class="copyright">
+            © <span id="year"></span> AV SQUAD STUDIOS.
+            ALL RIGHTS RESERVED.
+        </span>
+
+
+    </footer>
+
+
+</div>
+
+
+
+<!-- =====================================
+     VIDEO PLAYER MODAL
+     Videos play inside the website.
+     No visible YouTube URL.
+===================================== -->
+
+<div class="video-modal" id="videoModal" aria-hidden="true">
+
+
+    <button
+        class="video-close"
+        id="videoClose"
+        aria-label="Close video">
+
+        ×
+
+    </button>
+
+
+    <div class="video-container">
+
+        <p id="videoTitle">
+            PROJECT PREVIEW
+        </p>
+
+
+        <div class="video-screen" id="videoFrame">
+
+            <!-- Video player is inserted here by JavaScript -->
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================
+     JAVASCRIPT
+===================================== -->
+
+<script src="script.js"></script>
+
+
 </body>
 </html>
