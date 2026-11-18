@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!introScreen) return;
 
     introScreen.classList.add("intro-hidden");
-
     document.body.style.overflow = "";
 
     setTimeout(() => {
@@ -48,14 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateHeader() {
     if (!siteHeader) return;
 
-    if (window.scrollY > 40) {
-      siteHeader.classList.add("scrolled");
-    } else {
-      siteHeader.classList.remove("scrolled");
-    }
+    siteHeader.classList.toggle("scrolled", window.scrollY > 40);
   }
 
-  window.addEventListener("scroll", updateHeader);
+  window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
 
 
@@ -108,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.addEventListener("click", event => {
+
       if (
         navLinks.classList.contains("open") &&
         !navLinks.contains(event.target) &&
@@ -115,58 +111,14 @@ document.addEventListener("DOMContentLoaded", () => {
       ) {
         closeMenu();
       }
+
     });
 
   }
 
 
   /* =====================================
-     4. ACTIVE NAVIGATION LINK
-  ===================================== */
-
-  const sections = document.querySelectorAll(
-    "main section[id]"
-  );
-
-  if ("IntersectionObserver" in window) {
-
-    const sectionObserver = new IntersectionObserver(
-      entries => {
-
-        entries.forEach(entry => {
-
-          if (!entry.isIntersecting) return;
-
-          const currentId = entry.target.id;
-
-          navItems.forEach(link => {
-
-            const linkTarget = link.getAttribute("href");
-
-            link.classList.toggle(
-              "active",
-              linkTarget === `#${currentId}`
-            );
-
-          });
-
-        });
-
-      },
-      {
-        rootMargin: "-35% 0px -55% 0px"
-      }
-    );
-
-    sections.forEach(section => {
-      sectionObserver.observe(section);
-    });
-
-  }
-
-
-  /* =====================================
-     5. SCROLL REVEAL ANIMATIONS
+     4. SCROLL REVEAL ANIMATIONS
   ===================================== */
 
   const revealElements = document.querySelectorAll(".reveal");
@@ -186,11 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
         entries.forEach(entry => {
 
           if (entry.isIntersecting) {
-
             entry.target.classList.add("visible");
-
             observer.unobserve(entry.target);
-
           }
 
         });
@@ -216,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =====================================
-     6. PORTFOLIO VIDEO MODAL
+     5. PORTFOLIO VIDEO MODAL
   ===================================== */
 
   const videoModal = document.getElementById("videoModal");
@@ -250,7 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.classList.remove("modal-open");
 
-    // Stop video playback when modal closes.
     videoFrame.src = "";
 
   }
@@ -258,11 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
   portfolioVideos.forEach(video => {
 
     video.addEventListener("click", () => {
-
-      const videoId = video.dataset.video;
-
-      openVideo(videoId);
-
+      openVideo(video.dataset.video);
     });
 
   });
@@ -283,13 +227,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
+
+  /* =====================================
+     6. KEYBOARD CONTROLS
+  ===================================== */
+
   document.addEventListener("keydown", event => {
 
     if (event.key === "Escape") {
-
       closeVideo();
       closeMenu();
-
     }
 
   });
@@ -328,17 +275,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let genreIndex = 0;
   let genreTimer = null;
-  let genreObserver = null;
   let genreIsVisible = false;
-  let genreSequenceStarted = false;
 
   function clearGenreTimer() {
-
     if (genreTimer) {
       clearTimeout(genreTimer);
       genreTimer = null;
     }
-
   }
 
   function showNextGenre() {
@@ -347,32 +290,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     clearGenreTimer();
 
-    // Remove previous bubble completely.
+    // Completely hide the previous genre.
     genreBubble.classList.remove("pop");
     genreBubble.classList.add("bubble-exit");
 
+    // Wait for the disappearance before showing another.
     genreTimer = setTimeout(() => {
 
       if (!genreIsVisible) return;
 
-      // Select the next genre.
       genreName.textContent = genres[genreIndex];
 
       genreIndex = (genreIndex + 1) % genres.length;
 
-      // Reveal a fresh bubble.
       genreBubble.classList.remove("bubble-exit");
 
+      // Restart the CSS entrance animation.
       void genreBubble.offsetWidth;
 
       genreBubble.classList.add("pop");
 
-      // Leave it visible before the next transition.
+      // Display each genre for 1.2 seconds.
       genreTimer = setTimeout(() => {
-
         showNextGenre();
-
-      }, 2400);
+      }, 1200);
 
     }, 450);
 
@@ -380,16 +321,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function startGenreSequence() {
 
-    if (
-      genreSequenceStarted ||
-      !genreBubble ||
-      !genreStage
-    ) return;
-
-    genreSequenceStarted = true;
+    if (!genreBubble || !genreStage || genreIsVisible) return;
 
     genreIsVisible = true;
-
     genreIndex = 0;
 
     showNextGenre();
@@ -407,27 +341,19 @@ document.addEventListener("DOMContentLoaded", () => {
       genreBubble.classList.add("bubble-exit");
     }
 
-    genreSequenceStarted = false;
-
   }
 
   if (genreStage && "IntersectionObserver" in window) {
 
-    genreObserver = new IntersectionObserver(
+    const genreObserver = new IntersectionObserver(
       entries => {
 
         entries.forEach(entry => {
 
           if (entry.isIntersecting) {
-
-            if (!genreIsVisible) {
-              startGenreSequence();
-            }
-
+            startGenreSequence();
           } else {
-
             stopGenreSequence();
-
           }
 
         });
@@ -552,26 +478,7 @@ Sent through the AV Squad Studios website.
 
 
   /* =====================================
-     11. SOCIAL LINKS
-  ===================================== */
-
-  const externalSocialLinks = document.querySelectorAll(
-    '.social-links a[target="_blank"], .footer-socials a[target="_blank"]'
-  );
-
-  externalSocialLinks.forEach(link => {
-
-    link.addEventListener("click", () => {
-
-      // External social links are opened in a new tab.
-
-    });
-
-  });
-
-
-  /* =====================================
-     12. SMOOTH ANCHOR NAVIGATION
+     11. SMOOTH ANCHOR NAVIGATION
   ===================================== */
 
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -599,7 +506,7 @@ Sent through the AV Squad Studios website.
 
 
   /* =====================================
-     13. IMAGE FALLBACK
+     12. IMAGE FALLBACK
   ===================================== */
 
   document.querySelectorAll(".portfolio-video img").forEach(img => {
@@ -607,12 +514,10 @@ Sent through the AV Squad Studios website.
     img.addEventListener("error", () => {
 
       const videoButton = img.closest(".portfolio-video");
-
       const videoId = videoButton?.dataset.video;
 
       if (!videoId) return;
 
-      // Try YouTube's standard thumbnail if max resolution is unavailable.
       if (img.src.includes("maxresdefault.jpg")) {
 
         img.src =
@@ -626,7 +531,7 @@ Sent through the AV Squad Studios website.
 
 
   /* =====================================
-     14. PAGE INITIALIZATION
+     13. PAGE INITIALIZATION
   ===================================== */
 
   updateHeader();
